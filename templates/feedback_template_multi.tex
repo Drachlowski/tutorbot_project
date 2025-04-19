@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+\definecolor{tutorblue}{RGB}{30, 60, 140}
+\titleformat{\section}{\normalfont\Large\bfseries\color{tutorblue}}{}{0em}{}
+
+\begin{document}
+
+\begin{center}
+    \Huge \textbf{Feedback zur Hausübung}
+\end{center}
+
+\vspace{1cm}
+
+\section*{Gesamtbewertung}
+\textbf{Punkte:} {{ total_punkte }} / {{ total_max }}
+
+\vspace{0.5cm}
+
+{% for aufgabe in aufgaben %}
+\subsection*{Aufgabe {{ loop.index }}}
+
+\textbf{Punkte:} {{ aufgabe.punkte }} / {{ aufgabe.max_punkte }}
+
+\textbf{Feedback:}
+
+{{ aufgabe.feedback }}
+
+\vspace{0.5cm}
+
+\section*{Originalausarbeitung}
+
+\begin{quote}
+{{ aufgabe.student_text }}
+\end{quote}
+
+\vspace{0.5cm}
+{% endfor %}
+
+\noindent
+\textit{Dieses Feedback wurde automatisch durch den Tutorbot erstellt.}
+\end{document}

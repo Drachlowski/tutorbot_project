@@ -1,0 +1,17 @@
+\section*{Bewertung}
+
+\textbf{Punkte gesamt:} \quad \textbf{{{{total_punkte}}} / {{{total_max}}}}
+
+\vspace{0.5cm}
+
+{% for aufgabe in aufgaben %}
+\subsection*{Aufgabe {{aufgabe.nr}}}
+
+\textbf{Punkte:} {{aufgabe.punkte}} / {{aufgabe.max_punkte}}
+
+\textbf{Feedback:}
+
+{{aufgabe.feedback}}
+
+\vspace{0.5cm}
+{% endfor %}
