@@ -20,7 +20,7 @@ def load_prompt(path: Path, **kwargs) -> str:
     return text.format(**kwargs)
 
 
-def generate_feedback1(student_text: str, solution_text: str, task_description: str, max_score: int = 10) -> str:
+def generate_feedback(student_text: str, solution_text: str, task_description: str, max_score: int = 10) -> str:
     """
     This function generates feedback for a student submission. It uses the OpenAI API to generate a response.
 
@@ -55,7 +55,7 @@ def generate_feedback1(student_text: str, solution_text: str, task_description: 
 
     return response.choices[0].message.content.strip()
 
-def generate_feedback(student_text: str, solution_text: str, task_description: str, max_points: int = 10) -> str:
+def generate_feedback_static(student_text: str, solution_text: str, task_description: str, max_points: int = 10) -> str:
     """
     This is just a test function. It returns a static response.
 
@@ -74,4 +74,4 @@ Zunächst einmal hast du die Formel für die Berechnung der Kraft ein wenig durc
 
 Du hast stattdessen die Masse und die Beschleunigung addiert, was zu einem falschen Ergebnis geführt hat. Es ist wichtig, die physikalischen Formeln korrekt anzuwenden, da sie die Grundlage für die Berechnung physikalischer Größen bilden.
 
-Ich schätze deine Bemühungen und möchte dich ermutigen, die Formel noch einmal zu überprüfen und die Berechnung erneut durchzuführen. Du bist auf dem richtigen Weg, und mit ein wenig Übung wirst du die Konzepte sicher meistern. Wenn du Fragen hast oder weitere Unterstützung benötigst, stehe ich dir gerne zur Verfügung. Weiter so! 😊"""
+Ich schätze deine Bemühungen und möchte dich ermutigen, die Formel noch einmal zu überprüfen und die Berechnung erneut durchzuführen. Du bist auf dem richtigen Weg, und mit ein wenig Übung wirst du die Konzepte sicher meistern. Wenn du Fragen hast oder weitere Unterstützung benötigst, stehe ich dir gerne zur Verfügung. Weiter so!"""
