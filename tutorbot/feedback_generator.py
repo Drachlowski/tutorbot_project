@@ -9,20 +9,36 @@ client = OpenAI(
 )
 
 def load_prompt(path: Path, **kwargs) -> str:
+    """
+    This function loads a prompt from a file and replaces placeholders with the given values.
+
+    :param path: Path to the prompt file. Example: "prompts/user_prompt.txt"
+    :param kwargs: Placeholders and their values. Example: {"task_description": "Calculate the force of a mass."}
+    :return: The formatted prompt. Example: "Calculate the force of a mass.\n\nSolution: F = m \\times a"
+    """
     text = path.read_text(encoding="utf-8")
     return text.format(**kwargs)
 
 
-def generate_feedback1(student_text: str, solution_text: str, task_description: str, max_points: int = 10) -> str:
+def generate_feedback1(student_text: str, solution_text: str, task_description: str, max_score: int = 10) -> str:
+    """
+    This function generates feedback for a student submission. It uses the OpenAI API to generate a response.
+
+    :param student_text: Student submission. Example: "Calculate the force of a mass."
+    :param solution_text: Solution to the task. Example: "F = m \\times a"
+    :param task_description: Task description. Example: "Calculate the force of a mass."
+    :param max_score: Maximum score possible. Example: 10
+    :return: Generated feedback. Example: "Punkte: 4 / 10\nFeedback: ..."
+    """
     base_path = Path(__file__).parent / "prompts"
 
-    system_prompt = load_prompt(base_path / "system_prompt.txt", max_points=max_points)
+    system_prompt = load_prompt(base_path / "system_prompt.txt", max_points=max_score)
     user_prompt = load_prompt(
         base_path / "user_prompt.txt",
         task_description=task_description,
         solution_text=solution_text,
         student_text=student_text,
-        max_points=max_points
+        max_points=max_score
     )
 
     system_message = ChatCompletionSystemMessageParam(role="system", content=system_prompt)
@@ -37,11 +53,18 @@ def generate_feedback1(student_text: str, solution_text: str, task_description: 
         temperature=0.4
     )
 
-    print(response.usage)
-
     return response.choices[0].message.content.strip()
 
 def generate_feedback(student_text: str, solution_text: str, task_description: str, max_points: int = 10) -> str:
+    """
+    This is just a test function. It returns a static response.
+
+    :param student_text:
+    :param solution_text:
+    :param task_description:
+    :param max_points:
+    :return:
+    """
     return """- Punkte: 4 / 10
 - Feedback: 
 
