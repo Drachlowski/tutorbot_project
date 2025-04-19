@@ -54,7 +54,7 @@ def main():
                 student_text=aufgabe["student_text"],
                 solution_text=aufgabe["solution_text"],
                 task_description=instruction,
-                max_points=max_punkte
+                max_score=max_punkte
             )
 
             try:
