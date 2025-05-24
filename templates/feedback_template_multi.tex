@@ -7,6 +7,7 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{titlesec}
+\usepackage{listings}
 \usepackage{xcolor}
 
 \definecolor{tutorblue}{RGB}{30, 60, 140}
@@ -21,25 +22,25 @@
 \vspace{1cm}
 
 \section*{Gesamtbewertung}
-\textbf{Punkte:} {{ total_punkte }} / {{ total_max }}
+\textbf{Punkte:} {{ score }} / {{ max_score }}
 
 \vspace{0.5cm}
 
-{% for aufgabe in aufgaben %}
+{% for task in task_results %}
 \subsection*{Aufgabe {{ loop.index }}}
 
-\textbf{Punkte:} {{ aufgabe.punkte }} / {{ aufgabe.max_punkte }}
+\textbf{Punkte:} {{ task.score }} / {{ task.max_score }}
 
 \textbf{Feedback:}
 
-{{ aufgabe.feedback }}
+{{ task.feedback }}
 
 \vspace{0.5cm}
 
-\section*{Originalausarbeitung}
+\subsection*{Originalausarbeitung}
 
 \begin{quote}
-{{ aufgabe.student_text }}
+{{ task.submission }}
 \end{quote}
 
 \vspace{0.5cm}

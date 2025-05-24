@@ -32,6 +32,16 @@ def safe_filename(name: str) -> str:
     return "".join(c if c.isalnum() or c in "-_." else "_" for c in name).strip("_")
 
 
+def get_assignment_paths(subject: str) -> Path:
+    """
+    Delivers the submission path for a given subject.
+
+    :param subject: Example: "ssd4_ue01"
+    :return: Path to the assignment folder for the given subject. Example: "assignments/ssd4_ue01
+    """
+    return Path("assignments") / subject
+
+
 def get_submission_paths(subject: str, lastname: str, firstname: str) -> Path:
     """
     Delivers the submission path of a given student.
@@ -41,7 +51,7 @@ def get_submission_paths(subject: str, lastname: str, firstname: str) -> Path:
     :param firstname: Example: "max"
     :return: Path to the submission folder for the given student. Example: "submissions/ssd4_ue01_sample_max
     """
-    return Path("submissions") / f"{subject}_{lastname}_{firstname}"
+    return Path("submissions") / subject / f"{subject}_{lastname}_{firstname}"
 
 
 def get_solution_path(subject: str) -> Path:
@@ -54,9 +64,9 @@ def get_solution_path(subject: str) -> Path:
     return Path("solutions") / subject
 
 
-def list_aufgaben(submission_path: Path) -> list[str]:
+def list_tasks(submission_path: Path) -> list[str]:
     """
-    Delivers a list of all task ids in a given submission path. (examples: aufgabe1.md, aufgabe2.md, ...)
+    Delivers a list of all submission files a given submission path. (examples: aufgabe1.md, aufgabe2.md, ...)
 
     :param submission_path: Path to the submission folder for a given student. Example: "submissions/ssd4_ue01_sample_max
     :return: List of task ids. Example: ["aufgabe1", "aufgabe2", ...]
