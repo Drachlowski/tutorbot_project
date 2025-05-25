@@ -83,10 +83,12 @@ def process_student(subject: str, lastname: str, firstname: str) -> None:
             total_score += feedback['score']
             real_max_score += feedback['max_score']
 
-    output_dir = Path("data/output")
+    output_dir = Path("data/output") / subject
     output_dir.mkdir(parents=True, exist_ok=True)
-    tex_path = output_dir / f"{subject}_{lastname}_{firstname}_feedback.tex"
-    pdf_path = tex_path.with_suffix(".pdf")
+    (output_dir / "tex").mkdir(exist_ok=True)
+    (output_dir / "pdf").mkdir(exist_ok=True)
+    tex_path = output_dir / "tex" / f"{subject}_{lastname}_{firstname}_feedback.tex"
+    pdf_path = output_dir / "pdf" / f"{subject}_{lastname}_{firstname}_feedback.pdf"
 
     print(task_results)
 
