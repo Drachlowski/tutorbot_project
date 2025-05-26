@@ -6,6 +6,7 @@ from tutorbot.feedback_generator import generate_feedback
 from tutorbot.formatter import render_template_to_file
 from tutorbot.latex_client import render_latex
 from tutorbot.parser import load_student_submission
+from tutorbot.utils import sanitize_feedback
 
 base_path = Path().resolve()
 sys.path.append(str(base_path))
@@ -47,9 +48,11 @@ def process_task(task_id, task) -> dict | None:
         elif action == "3":
             new_score = input("New score: ").strip()
             try:
-                new_score = int(new_score)
+                new_score = float(new_score)
                 if new_score < 0 or new_score > feedback['max_score']:
                     raise ValueError()
+                feedback['score'] = new_score
+                return feedback
             except ValueError:
                 print("Invalid input. Score not changed.")
 
@@ -77,6 +80,9 @@ def process_student(subject: str, lastname: str, firstname: str) -> None:
     for i, task in enumerate(submission, start=1):
         print(f"\nTask {i}: {task['task_id']}")
         feedback = process_task(i, task)
+        print(feedback)
+        feedback['submission'] = sanitize_feedback(feedback['submission'])
+        feedback['feedback'] = sanitize_feedback(feedback['feedback'])
 
         if feedback:
             task_results.append(feedback)
@@ -137,8 +143,8 @@ def load_all_students(subject: str) -> list:
 
     for student_dir in Path(f"data/submissions/{subject}").iterdir():
         if student_dir.is_dir():
-            lastname = student_dir.name.split("_")[1]
-            firstname = student_dir.name.split("_")[2]
+            lastname = student_dir.name.split("_")[2]
+            firstname = student_dir.name.split("_")[3]
             students.append((lastname, firstname))
     return students
 

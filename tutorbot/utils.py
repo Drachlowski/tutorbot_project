@@ -1,4 +1,7 @@
 from pathlib import Path
+import re
+
+PATTERN = re.compile(r'(\\begin\{verbatim\}.*?\\end\{verbatim\})', re.DOTALL)
 
 def sanitize_latex_text(text: str) -> str:
     """
@@ -9,6 +12,7 @@ def sanitize_latex_text(text: str) -> str:
     """
     return (
         text.replace("\u202f", " ")  # NNBSP
+            .replace("\\", r"\textbackslash{}")
             .replace("&", r"\&")
             .replace("%", r"\%")
             .replace("$", r"\$")
@@ -18,8 +22,18 @@ def sanitize_latex_text(text: str) -> str:
             .replace("}", r"\}")
             .replace("~", r"\textasciitilde{}")
             .replace("^", r"\textasciicircum{}")
-            .replace("\\", r"\textbackslash{}")
     )
+
+def sanitize_feedback(text: str) -> str:
+
+    parts = PATTERN.split(text)
+
+    for i in range(len(parts)):
+        if not parts[i].startswith(r'\begin{verbatim}'):
+            parts[i] = sanitize_latex_text(parts[i])
+
+    return ''.join(parts)
+
 
 def print_divider(title: str = ""):
     print("\n" + "=" * 40)
@@ -66,9 +80,9 @@ def get_solution_path(subject: str) -> Path:
 
 def list_tasks(submission_path: Path) -> list[str]:
     """
-    Delivers a list of all submission files a given submission path. (examples: aufgabe1.md, aufgabe2.md, ...)
+    Delivers a list of all submission files a given submission path. (examples: aufgabe_1.md, aufgabe_2.md, ...)
 
-    :param submission_path: Path to the submission folder for a given student. Example: "submissions/ssd4_ue01_sample_max
+    :param submission_path: Path to the submission folder for a given student. Example: submissions/ssd4_ue01_sample_max
     :return: List of task ids. Example: ["aufgabe1", "aufgabe2", ...]
     """
     return sorted([p.stem for p in submission_path.glob("aufgabe*.md")])

@@ -2,7 +2,7 @@ import os
 import requests
 from pathlib import Path
 
-LATEX_RENDERER_URL = os.getenv("LATEX_RENDERER_URL")
+from .config import LATEX_RENDERER_URL
 
 def render_latex(tex_content: str, output_path: Path):
     """
