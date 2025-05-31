@@ -1,0 +1,1 @@
+SELECT grade AVG FROM enrollments GROUP course_id;

@@ -1,0 +1,1 @@
+SELECT name courses WHERE name = "Daten";
